@@ -8,34 +8,32 @@ Predict the future `BTCUSDT` prices using neural network.
 
 2. Create a symbolic directory link named `data` targeting the `data` directory containing the datasets.
 
-3. ```sh
-   $ python ./main.py
-   ```
+```sh
+$ python ./main.py
+```
 
 Trained model is saved in `./model/<Time>/`.
 
-## Model Structure (TODO)
+## Model Structure
 
 ```
-    ┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐
-    │ input_1 (InputLayer) │ │ input_2 (InputLayer) │ │ input_3 (InputLayer) │
-    │  (BTCUSDT dataset)   │ │  (ETHUSDT dataset)   │ │   (ETHBTC dataset)   │
-    └──────────┬───────────┘ └──────────┬───────────┘ └──────────┬───────────┘
+    ┌──────────────────────┐ ┌──────────────────────┐ ┌─────────────────────┐
+    │ btcusdt (InputLayer) │ │ ethusdt (InputLayer) │ │ ethbtc (InputLayer) │
+    └──────────┬───────────┘ └──────────┬───────────┘ └──────────┬──────────┘
                │                        │                        │
        ┌───────▼───────┐        ┌───────▼───────┐        ┌───────▼───────┐
        │ lstm_1 (LSTM) │        │ lstm_2 (LSTM) │        │ lstm_3 (LSTM) │
        └─┬───────────┬─┘        └───────┬───────┘        └─┬─────────────┘
-         │           └───────────┐      │      ┌───────────┘
-┌────────▼─────────┐           ┌─▼──────▼──────▼─┐
-│ output_1 (Dense) │           │ merge_1 (Merge) │
-│  (Main output)   │           └────────┬────────┘
-└──────────────────┘                    │
+         │           └────────┐         │          ┌───────┘
+┌────────▼─────────┐        ┌─▼─────────▼──────────▼─┐
+│ output_1 (Dense) │        │ concat_1 (Concatenate) │
+└──────────────────┘        └───────────┬────────────┘
+                                        │
                                ┌────────▼────────┐
                                │ dense_1 (Dense) │
                                └────────┬────────┘
                                         │
                               ┌─────────▼──────────┐
                               │  output_2 (Dense)  │
-                              │ (Auxiliary output) │
                               └────────────────────┘
 ```
