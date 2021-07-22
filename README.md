@@ -9,31 +9,33 @@ Predict the future `BTCUSDT` prices using neural network.
 2. Create a symbolic directory link named `data` targeting the `data` directory containing the datasets.
 
 ```sh
-$ python ./main.py
+$ python ./preprocess_data.py
+$ python ./train.py
+$ python ./plot.py
 ```
 
-Trained model is saved in `./model/<Time>/`.
+Preprocessed data is saved in `./preprocessed_data/BTCUSDT.npz`, trained model is saved in `./model/<Time>/`.
 
 ## Model Structure
 
 ```
-    ┌──────────────────────┐ ┌──────────────────────┐ ┌─────────────────────┐
-    │ btcusdt (InputLayer) │ │ ethusdt (InputLayer) │ │ ethbtc (InputLayer) │
-    └──────────┬───────────┘ └──────────┬───────────┘ └──────────┬──────────┘
-               │                        │                        │
-       ┌───────▼───────┐        ┌───────▼───────┐        ┌───────▼───────┐
-       │ lstm_1 (LSTM) │        │ lstm_2 (LSTM) │        │ lstm_3 (LSTM) │
-       └─┬───────────┬─┘        └───────┬───────┘        └─┬─────────────┘
-         │           └────────┐         │          ┌───────┘
-┌────────▼─────────┐        ┌─▼─────────▼──────────▼─┐
-│ output_1 (Dense) │        │ concat_1 (Concatenate) │
-└──────────────────┘        └───────────┬────────────┘
-                                        │
-                               ┌────────▼────────┐
-                               │ dense_1 (Dense) │
-                               └────────┬────────┘
-                                        │
-                               ┌────────▼─────────┐
-                               │ output_2 (Dense) │
-                               └──────────────────┘
+┌────────────┐
+│ InputLayer │
+└─────┬──────┘
+      │
+┌─────▼─────┐
+│    GRU    │
+└─────┬─────┘
+      │
+┌─────▼─────┐
+│   LTSM    │
+└─────┬─────┘
+      │
+┌─────▼─────┐
+│   Dense   │
+└─────┬─────┘
+      │
+┌─────▼─────┐
+│   Dense   │
+└───────────┘
 ```
