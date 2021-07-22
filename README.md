@@ -14,7 +14,7 @@ $ python ./train.py
 $ python ./plot.py
 ```
 
-Preprocessed data is saved in `./preprocessed_data/BTCUSDT.npz`, trained model is saved in `./model/<Time>/`.
+Preprocessed data is saved in `./preprocessed/BTCUSDT.npz`, trained model is saved in `./model/<Time>/`.
 
 ## Model Structure
 
