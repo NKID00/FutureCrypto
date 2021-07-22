@@ -1,4 +1,4 @@
-## FutureBTCUSDT
+## FutureCrypto
 
 Predict the future `BTCUSDT` prices using neural network.
 
