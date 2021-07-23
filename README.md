@@ -7,7 +7,7 @@ Predict the future `BTCUSDT` cryptocurrency exchange prices using neural network
 1. Install the dependences:
 
    ```sh
-   pip install -U numpy tensorflow matplotlib
+   $ pip install -U numpy tensorflow matplotlib
    ```
 
 2. Build the `BTCUSDT` dataset using [CryptocurrencyPriceDataset](https://github.com/NKID00/CryptocurrencyPriceDataset).
@@ -29,7 +29,7 @@ Predict the future `BTCUSDT` cryptocurrency exchange prices using neural network
    $ python ./train.py
    ```
 
-   Trained model is saved in `./model/<Time>/`.
+   Trained model is saved on every epoch in `./model/<Time>_<Sum of previous epoches>_<Current epoch>/`.
 
    Restore semi-trained model from the latest epoch:
 
