@@ -6,7 +6,7 @@ import numpy as np
 
 from config import (
     INPUT_SIZE, OUTPUT_SIZE, TEST_DATASET_SIZE,
-    SHUFFLE_BUFFER_SIZE, BATCH_SIZE
+    SHUFFLE_BUFFER_SIZE, BATCH_SIZE, EPOCHS
 )
 
 
@@ -14,9 +14,9 @@ def build_model() -> tf.keras.Model:
     print('build model ...')
     model = tf.keras.models.Sequential([
         tf.keras.layers.Input(shape=[INPUT_SIZE, 1]),
-        tf.keras.layers.GRU(INPUT_SIZE * 2, return_sequences=True),
-        tf.keras.layers.LSTM(INPUT_SIZE),
-        tf.keras.layers.Dense(INPUT_SIZE, activation='tanh'),
+        tf.keras.layers.GRU(INPUT_SIZE * 3, return_sequences=True),
+        tf.keras.layers.LSTM(INPUT_SIZE * 2),
+        tf.keras.layers.Dense(INPUT_SIZE * 2, activation='tanh'),
         tf.keras.layers.Dense(OUTPUT_SIZE)
     ])
 
@@ -56,7 +56,7 @@ def train_model(
     model: tf.keras.Model, train: tf.data.Dataset, test: tf.data.Dataset
 ):
     print('train model ...')
-    model.fit(train, epochs=8, verbose=1)
+    model.fit(train, epochs=EPOCHS, verbose=1)
     model.evaluate(test, verbose=1)
 
 

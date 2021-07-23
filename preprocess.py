@@ -1,12 +1,12 @@
 import tensorflow as tf
 import numpy as np
 
-from config import SUBSAMPLING_SIZE, INPUT_SIZE, SHIFT_SIZE
+from config import DATA_SIZE, SUBSAMPLING_SIZE, INPUT_SIZE, SHIFT_SIZE
 
 
 def preprocess_data():
     print('load data ...')
-    arr = np.load('./data/BTCUSDT.npz')['arr_0']
+    arr = np.load('./data/BTCUSDT.npz')['arr_0'][-DATA_SIZE:]
 
     print('preprocess data ...')
     xp = (arr.min(), arr.max())
