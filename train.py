@@ -63,7 +63,7 @@ def train_model(
         tf.keras.callbacks.EarlyStopping(
             monitor='loss', patience=2, restore_best_weights=True
         ),
-        tf.keras.callbacks.ModelCheckpoint('./model/%s_{epoch:02d}' % name)
+        tf.keras.callbacks.ModelCheckpoint('./model/%s_00_{epoch:02d}' % name)
     ])
     model.evaluate(test, verbose=1)
 

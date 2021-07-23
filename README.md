@@ -31,7 +31,13 @@ Predict the future `BTCUSDT` cryptocurrency exchange prices using neural network
 
    Trained model is saved in `./model/<Time>/`.
 
-1. Plot the prediction (and real values):
+   Restore semi-trained model from the latest epoch:
+
+   ```sh
+   $ python ./restore.py
+   ```
+
+6. Plot the prediction (and real values):
 
    ```sh
    $ python ./plot.py

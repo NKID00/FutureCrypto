@@ -18,13 +18,13 @@ def load_plot_data() -> Tuple[
     return xp, raw
 
 
-def load_model() -> tf.keras.Model:
+def load_model() -> Tuple[tf.keras.Model, str]:
     print('load model ...')
     name = sorted(next(walk("model"))[1])[-1]
     print(f'model name = {name}')
     model = tf.keras.models.load_model(f'./model/{name}')
     model.summary()
-    return model
+    return model, name
 
 
 def plot_one(ax, real, t, c, l):
@@ -49,25 +49,26 @@ def plot_prediction(
     y_iter = test_data[1:]
     axes = plt.subplots(TEST_DATASET_SIZE // 2, 2)[1].flatten()
     t_iter = x_iter[:]
-    for i in range(PREDICTION_SIZE):
-        print('%-30s' % f'predict {i} ...', end='\r')
+    for i in range(1, PREDICTION_SIZE+1):
+        print('%-30s' % f'predict {i}/{PREDICTION_SIZE} ...', end='\r')
         prediction = model.predict(
             t_iter.reshape(t_iter.shape[0], t_iter.shape[1], 1)
         ).reshape(-1, 1)
         t_iter = np.hstack((t_iter[:, 1:], prediction))
     print()
-    for i, (x, y, t, ax) in enumerate(zip(x_iter, y_iter, t_iter, axes)):
-        print(f'plot {i}/{len(x_iter)} ...')
+    for i, (x, y, t, ax) in enumerate(zip(x_iter, y_iter, t_iter, axes), 1):
+        print(f'plot {i}/{len(x_iter)} ...', end='\r')
         plot_one_prediction(
             ax,
             np.interp(x[-PREDICTION_SIZE*3:], [-1.0, +1.0], xp),
             np.interp(y[-PREDICTION_SIZE*3:], [-1.0, +1.0], xp),
             np.interp(t[-PREDICTION_SIZE:], [-1.0, +1.0], xp)
         )
+    print()
     plt.show()
 
 
 if __name__ == '__main__':
-    model = load_model()
+    model = load_model()[0]
     xp, raw = load_plot_data()
     plot_prediction(model, xp, raw)
