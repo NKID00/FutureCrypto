@@ -1,3 +1,6 @@
+from itertools import cycle, repeat
+from operator import mul
+
 import tensorflow as tf
 import numpy as np
 
@@ -19,10 +22,19 @@ def preprocess_data():
         INPUT_SIZE, shift=SHIFT_SIZE, drop_remainder=True
     )
     arr = np.empty((len(dataset), INPUT_SIZE), dtype=np.float64)
+    rows = arr.shape[0]
+    dots = cycle(map(mul, repeat('.', 3), range(1, 3+1)))
     for i, ds in enumerate(dataset):
-        print(f'preprocess row {i}/{arr.shape[0]} ...', end='\r')
+        if i % 3 == 0:
+            print('%-30s' % (
+                '%d/%d %.2f%% %s' % (
+                    i, rows, i/rows * 100, next(dots)
+                )
+            ), end='\r')
         arr[i] = list(ds[0].as_numpy_iterator())
-    print()
+    print('%d/%d 100.00%% ...' % (
+        i, rows
+    ))
 
     # after 1 input_size
     y = arr[1:]

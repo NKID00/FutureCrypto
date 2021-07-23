@@ -2,19 +2,40 @@
 
 Predict the future `BTCUSDT` cryptocurrency exchange prices using neural network.
 
-## Build
+## Usage
 
-1. Build the `BTCUSDT` dataset using [CryptocurrencyPriceDataset](https://github.com/NKID00/CryptocurrencyPriceDataset).
+1. Install the dependences:
 
-2. Create a symbolic directory link named `data` targeting the `data` directory containing the datasets.
+   ```sh
+   pip install -U numpy tensorflow matplotlib
+   ```
 
-```sh
-$ python ./preprocess_data.py
-$ python ./train.py
-$ python ./plot.py
-```
+2. Build the `BTCUSDT` dataset using [CryptocurrencyPriceDataset](https://github.com/NKID00/CryptocurrencyPriceDataset).
 
-Preprocessed data is saved in `./preprocessed/BTCUSDT.npz`, trained model is saved in `./model/<Time>/`.
+3. Create a symbolic directory link named `data` targeting the `data` directory containing the datasets.
+
+4. Preprocess the data:
+
+   ```sh
+   $ python ./preprocess.py
+   ```
+
+   Preprocessed data is saved in `./preprocessed/BTCUSDT.npz`.
+
+
+5. Train the model:
+
+   ```sh
+   $ python ./train.py
+   ```
+
+   Trained model is saved in `./model/<Time>/`.
+
+1. Plot the prediction (and real values):
+
+   ```sh
+   $ python ./plot.py
+   ```
 
 ## Model Structure
 

@@ -13,7 +13,7 @@ from config import (
 def build_model() -> tf.keras.Model:
     print('build model ...')
     model = tf.keras.models.Sequential([
-        tf.keras.layers.Input(shape=[INPUT_SIZE, 1]),
+        tf.keras.layers.InputLayer(input_shape=[INPUT_SIZE, 1]),
         tf.keras.layers.GRU(INPUT_SIZE * 3, return_sequences=True),
         tf.keras.layers.LSTM(INPUT_SIZE * 2),
         tf.keras.layers.Dense(INPUT_SIZE * 2, activation='tanh'),
@@ -51,24 +51,25 @@ def load_train_data() -> Tuple[tf.data.Dataset, tf.data.Dataset]:
     )
     return train, test
 
+def generate_name():
+    return datetime.now().strftime("%Y%m%dT%H%M%S")
 
 def train_model(
-    model: tf.keras.Model, train: tf.data.Dataset, test: tf.data.Dataset
+    model: tf.keras.Model, name:str,
+    train: tf.data.Dataset, test: tf.data.Dataset
 ):
     print('train model ...')
-    model.fit(train, epochs=EPOCHS, verbose=1)
+    model.fit(train, epochs=EPOCHS, verbose=1, callbacks=[
+        tf.keras.callbacks.EarlyStopping(
+            monitor='loss', patience=2, restore_best_weights=True
+        ),
+        tf.keras.callbacks.ModelCheckpoint('./model/%s_{epoch}' % name)
+    ])
     model.evaluate(test, verbose=1)
-
-
-def save_model(model: tf.keras.Model):
-    print('save model ...')
-    name = datetime.now().strftime("%Y%m%dT%H%M%S")
-    print(f'model name = {name}')
-    model.save(f'./model/{name}')
 
 
 if __name__ == '__main__':
     model = build_model()
     train, test = load_train_data()
-    train_model(model, train, test)
-    save_model(model)
+    name = generate_name()
+    train_model(model, name, train, test)
