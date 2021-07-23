@@ -1,10 +1,10 @@
 ## FutureCrypto
 
-Predict the future `BTCUSDT` prices using neural network.
+Predict the future `BTCUSDT` cryptocurrency exchange prices using neural network.
 
 ## Build
 
-1. Build `BTCUSDT`, `ETHUSDT` and `ETHBTC` dataset using [CryptocurrencyPriceDataset](https://github.com/NKID00/CryptocurrencyPriceDataset).
+1. Build the `BTCUSDT` dataset using [CryptocurrencyPriceDataset](https://github.com/NKID00/CryptocurrencyPriceDataset).
 
 2. Create a symbolic directory link named `data` targeting the `data` directory containing the datasets.
 
