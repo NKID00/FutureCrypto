@@ -21,6 +21,8 @@ def restore_train_model(
     name, start_from, epochs_trained = name.split('_')
     start_from = int(start_from)
     epochs_trained = int(epochs_trained)
+    if start_from + epochs_trained >= EPOCHS:
+        print('no semi-trained model found!')
     print('train model from %d epoch ...' % (
         start_from + epochs_trained
     ))
