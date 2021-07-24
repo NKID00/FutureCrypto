@@ -36,9 +36,9 @@ def plot_one_prediction(ax, x, y, t):
     real = np.concatenate((x, y))
     ax.plot(range(len(real)), real, c='gray', label='real', zorder=1)
     # ax.scatter(range(len(real)), real, c='gray', zorder=1)
-    plot_one(ax, real, t, 'deepskyblue', 'output')
-    if SHOW_DIFFERENCE:
-        plot_one(ax.twinx(), real, y[-len(t):] - t, 'salmon', 'difference')
+    # plot_one(ax, real, t, 'deepskyblue', 'output')
+    # if SHOW_DIFFERENCE:
+    #     plot_one(ax.twinx(), real, y[-len(t):] - t, 'salmon', 'difference')
 
 
 def plot_prediction(

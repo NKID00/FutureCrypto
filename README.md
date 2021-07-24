@@ -14,7 +14,9 @@ Predict the future `BTCUSDT` cryptocurrency exchange prices using neural network
 
 3. Create a symbolic directory link named `data` targeting the `data` directory containing the datasets.
 
-4. Preprocess the data:
+4. Modify `./config.py` if needed.
+
+5. Run this script to preprocess the data:
 
    ```sh
    $ python ./preprocess.py
@@ -23,7 +25,7 @@ Predict the future `BTCUSDT` cryptocurrency exchange prices using neural network
    Preprocessed data is saved in `./preprocessed/BTCUSDT.npz`.
 
 
-5. Train the model:
+6. Run this script to train the model:
 
    ```sh
    $ python ./train.py
@@ -31,13 +33,13 @@ Predict the future `BTCUSDT` cryptocurrency exchange prices using neural network
 
    Trained model is saved on every epoch in `./model/<Time>_<Sum of previous epoches>_<Current epoch>/`.
 
-   Restore semi-trained model from the latest epoch:
+   Or run this script to restore semi-trained model from the latest epoch:
 
    ```sh
    $ python ./restore.py
    ```
 
-6. Plot the prediction (and real values):
+7. Run this script to plot the prediction (and real values):
 
    ```sh
    $ python ./plot.py

@@ -1,13 +1,6 @@
-from typing import Tuple
-from datetime import datetime
-
 import tensorflow as tf
-import numpy as np
 
-from config import (
-    INPUT_SIZE, OUTPUT_SIZE, TEST_DATASET_SIZE,
-    SHUFFLE_BUFFER_SIZE, BATCH_SIZE, EPOCHS
-)
+from config import EPOCHS
 from train import load_train_data
 from plot import load_model
 
