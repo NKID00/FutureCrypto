@@ -6,7 +6,7 @@ from plot import load_model
 
 def restore_train_model(
     model: tf.keras.Model, name:str,
-    train: tf.data.Dataset, test: tf.data.Dataset
+    train: tf.data.Dataset
 ):
     if '_' not in name:
         print('no semi-trained model found!')
@@ -22,17 +22,16 @@ def restore_train_model(
     model.fit(train, epochs=(
         EPOCHS - start_from - epochs_trained
     ), verbose=1, callbacks=[
-        tf.keras.callbacks.EarlyStopping(
-            monitor='loss', patience=2, restore_best_weights=True
-        ),
+        # tf.keras.callbacks.EarlyStopping(
+        #     monitor='loss', patience=2, restore_best_weights=True
+        # ),
         tf.keras.callbacks.ModelCheckpoint(
             './model/%s_%02d_{epoch:02d}' % (name, start_from + epochs_trained)
         )
     ])
-    model.evaluate(test, verbose=1)
 
 
 if __name__ == '__main__':
     model, name = load_model()
-    train, test = load_train_data()
-    restore_train_model(model, name, train, test)
+    train = load_train_data()
+    restore_train_model(model, name, train)

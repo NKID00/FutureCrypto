@@ -1,4 +1,3 @@
-from typing import Tuple
 from datetime import datetime
 
 import tensorflow as tf
@@ -29,7 +28,7 @@ def build_model() -> tf.keras.Model:
     return model
 
 
-def load_train_data() -> Tuple[tf.data.Dataset, tf.data.Dataset]:
+def load_train_data() -> tf.data.Dataset:
     print('load data ...')
     data = np.load('./preprocessed/BTCUSDT.npz')
     arr = data['arr']
@@ -44,32 +43,26 @@ def load_train_data() -> Tuple[tf.data.Dataset, tf.data.Dataset]:
         .batch(BATCH_SIZE)
         .prefetch(1)
     )
-    test = (
-        dataset.skip(len(y) - TEST_DATASET_SIZE)
-        .batch(BATCH_SIZE)
-        .prefetch(1)
-    )
-    return train, test
+    return train
 
 def generate_name():
     return datetime.now().strftime("%Y%m%dT%H%M%S")
 
 def train_model(
     model: tf.keras.Model, name:str,
-    train: tf.data.Dataset, test: tf.data.Dataset
+    train: tf.data.Dataset
 ):
     print('train model ...')
     model.fit(train, epochs=EPOCHS, verbose=1, callbacks=[
-        tf.keras.callbacks.EarlyStopping(
-            monitor='loss', patience=2, restore_best_weights=True
-        ),
+        # tf.keras.callbacks.EarlyStopping(
+        #     monitor='loss', patience=2, restore_best_weights=True
+        # ),
         tf.keras.callbacks.ModelCheckpoint('./model/%s_00_{epoch:02d}' % name)
     ])
-    model.evaluate(test, verbose=1)
 
 
 if __name__ == '__main__':
     model = build_model()
-    train, test = load_train_data()
+    train = load_train_data()
     name = generate_name()
-    train_model(model, name, train, test)
+    train_model(model, name, train)
